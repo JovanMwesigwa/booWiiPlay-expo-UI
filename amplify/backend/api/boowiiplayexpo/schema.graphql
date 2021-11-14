@@ -1,0 +1,30 @@
+type User @model {
+  id: ID!
+  username: String!
+  email: String!
+  bio: String
+  picture: String
+  songs: [Song] @connection(keyName: "byUser", fields: ["id"])
+}
+
+type Song @model @key(name: "byUser", fields: ["userID"])
+  @auth(rules: [{ allow: owner, operations: [create, delete, update] }]){
+  id: ID!
+  title: String!
+  description: String!
+  artUri: String
+
+  audioUri: String!
+
+  userID: ID!
+  user: User @connection(fields: ["userID"])
+
+  genreID: ID!
+  genres: [Genre] @connection(fields: ["genreID"])
+
+}
+
+type Genre @model{
+  id: ID!
+  name: String!
+}

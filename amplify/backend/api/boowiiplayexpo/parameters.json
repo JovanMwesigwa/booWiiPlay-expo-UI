@@ -1,0 +1,11 @@
+{
+  "AppSyncApiName": "boowiiplayexpo",
+  "DynamoDBBillingMode": "PAY_PER_REQUEST",
+  "DynamoDBEnableServerSideEncryption": false,
+  "AuthCognitoUserPoolId": {
+    "Fn::GetAtt": [
+      "authboowiiplayexpof7acc42ef7acc42e",
+      "Outputs.UserPoolId"
+    ]
+  }
+}

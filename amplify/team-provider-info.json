@@ -1,0 +1,26 @@
+{
+  "dev": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-boowiiplayexpo-dev-121911-authRole",
+      "UnauthRoleArn": "arn:aws:iam::723774270495:role/amplify-boowiiplayexpo-dev-121911-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::723774270495:role/amplify-boowiiplayexpo-dev-121911-authRole",
+      "Region": "us-east-1",
+      "DeploymentBucketName": "amplify-boowiiplayexpo-dev-121911-deployment",
+      "UnauthRoleName": "amplify-boowiiplayexpo-dev-121911-unauthRole",
+      "StackName": "amplify-boowiiplayexpo-dev-121911",
+      "StackId": "arn:aws:cloudformation:us-east-1:723774270495:stack/amplify-boowiiplayexpo-dev-121911/f07914a0-452b-11ec-a81d-0e27832eb679",
+      "AmplifyAppId": "d1m21ih6gyj0zv"
+    },
+    "categories": {
+      "function": {
+        "boowiiplayexpof7acc42ef7acc42ePostConfirmation": {
+          "deploymentBucketName": "amplify-boowiiplayexpo-dev-121911-deployment",
+          "s3Key": "amplify-builds/boowiiplayexpof7acc42ef7acc42ePostConfirmation-5a4c774e567176716471-build.zip"
+        }
+      },
+      "auth": {
+        "boowiiplayexpof7acc42ef7acc42e": {}
+      }
+    }
+  }
+}
