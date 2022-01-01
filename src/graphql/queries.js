@@ -52,23 +52,6 @@ export const listUsers = /* GraphQL */ `
     }
   }
 `;
-export const getUserProfile = /* GraphQL */ `
-  query ListUsers(
-    $username: String
-  ) {
-    listUsers(filter: {username: {eq: $username}}, limit: 1) {
-      nextToken
-      items {
-        email
-        username
-        picture
-        id
-        createdAt
-        bio
-      }
-    }
-  }
-`;
 export const getSong = /* GraphQL */ `
   query GetSong($id: ID!) {
     getSong(id: $id) {
@@ -95,6 +78,7 @@ export const getSong = /* GraphQL */ `
         items {
           id
           name
+          genrePic
           createdAt
           updatedAt
         }
@@ -141,11 +125,139 @@ export const listSongs = /* GraphQL */ `
     }
   }
 `;
+export const getMediaCategory = /* GraphQL */ `
+  query GetMediaCategory($id: ID!) {
+    getMediaCategory(id: $id) {
+      id
+      name
+      songs {
+        items {
+          id
+          name
+          freq
+          country
+          picture
+          numberOfMusicShows
+          mediaCategoryID
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const listMediaCategorys = /* GraphQL */ `
+  query ListMediaCategorys(
+    $filter: ModelMediaCategoryFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listMediaCategorys(filter: $filter, limit: $limit, nextToken: $nextToken) {
+      items {
+        id
+        name
+        songs {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+  }
+`;
+export const getRadio = /* GraphQL */ `
+  query GetRadio($id: ID!) {
+    getRadio(id: $id) {
+      id
+      name
+      freq
+      country
+      picture
+      numberOfMusicShows
+      mediaCategoryID
+      MediaCategory {
+        id
+        name
+        songs {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+      genresAccepted {
+        items {
+          id
+          name
+          genrePic
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      songsAcquired {
+        items {
+          id
+          title
+          description
+          artUri
+          audioUri
+          userID
+          genreID
+          createdAt
+          updatedAt
+          owner
+        }
+        nextToken
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const listRadios = /* GraphQL */ `
+  query ListRadios(
+    $filter: ModelRadioFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listRadios(filter: $filter, limit: $limit, nextToken: $nextToken) {
+      items {
+        id
+        name
+        freq
+        country
+        picture
+        numberOfMusicShows
+        mediaCategoryID
+        MediaCategory {
+          id
+          name
+          createdAt
+          updatedAt
+        }
+        genresAccepted {
+          nextToken
+        }
+        songsAcquired {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+  }
+`;
 export const getGenre = /* GraphQL */ `
   query GetGenre($id: ID!) {
     getGenre(id: $id) {
       id
       name
+      genrePic
       createdAt
       updatedAt
     }
@@ -161,6 +273,7 @@ export const listGenres = /* GraphQL */ `
       items {
         id
         name
+        genrePic
         createdAt
         updatedAt
       }

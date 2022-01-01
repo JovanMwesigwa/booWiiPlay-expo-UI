@@ -111,6 +111,7 @@ export const onCreateSong = /* GraphQL */ `
         items {
           id
           name
+          genrePic
           createdAt
           updatedAt
         }
@@ -148,6 +149,7 @@ export const onUpdateSong = /* GraphQL */ `
         items {
           id
           name
+          genrePic
           createdAt
           updatedAt
         }
@@ -185,6 +187,7 @@ export const onDeleteSong = /* GraphQL */ `
         items {
           id
           name
+          genrePic
           createdAt
           updatedAt
         }
@@ -196,11 +199,231 @@ export const onDeleteSong = /* GraphQL */ `
     }
   }
 `;
+export const onCreateMediaCategory = /* GraphQL */ `
+  subscription OnCreateMediaCategory {
+    onCreateMediaCategory {
+      id
+      name
+      songs {
+        items {
+          id
+          name
+          freq
+          country
+          picture
+          numberOfMusicShows
+          mediaCategoryID
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onUpdateMediaCategory = /* GraphQL */ `
+  subscription OnUpdateMediaCategory {
+    onUpdateMediaCategory {
+      id
+      name
+      songs {
+        items {
+          id
+          name
+          freq
+          country
+          picture
+          numberOfMusicShows
+          mediaCategoryID
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onDeleteMediaCategory = /* GraphQL */ `
+  subscription OnDeleteMediaCategory {
+    onDeleteMediaCategory {
+      id
+      name
+      songs {
+        items {
+          id
+          name
+          freq
+          country
+          picture
+          numberOfMusicShows
+          mediaCategoryID
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onCreateRadio = /* GraphQL */ `
+  subscription OnCreateRadio {
+    onCreateRadio {
+      id
+      name
+      freq
+      country
+      picture
+      numberOfMusicShows
+      mediaCategoryID
+      MediaCategory {
+        id
+        name
+        songs {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+      genresAccepted {
+        items {
+          id
+          name
+          genrePic
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      songsAcquired {
+        items {
+          id
+          title
+          description
+          artUri
+          audioUri
+          userID
+          genreID
+          createdAt
+          updatedAt
+          owner
+        }
+        nextToken
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onUpdateRadio = /* GraphQL */ `
+  subscription OnUpdateRadio {
+    onUpdateRadio {
+      id
+      name
+      freq
+      country
+      picture
+      numberOfMusicShows
+      mediaCategoryID
+      MediaCategory {
+        id
+        name
+        songs {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+      genresAccepted {
+        items {
+          id
+          name
+          genrePic
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      songsAcquired {
+        items {
+          id
+          title
+          description
+          artUri
+          audioUri
+          userID
+          genreID
+          createdAt
+          updatedAt
+          owner
+        }
+        nextToken
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onDeleteRadio = /* GraphQL */ `
+  subscription OnDeleteRadio {
+    onDeleteRadio {
+      id
+      name
+      freq
+      country
+      picture
+      numberOfMusicShows
+      mediaCategoryID
+      MediaCategory {
+        id
+        name
+        songs {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+      genresAccepted {
+        items {
+          id
+          name
+          genrePic
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      songsAcquired {
+        items {
+          id
+          title
+          description
+          artUri
+          audioUri
+          userID
+          genreID
+          createdAt
+          updatedAt
+          owner
+        }
+        nextToken
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
 export const onCreateGenre = /* GraphQL */ `
   subscription OnCreateGenre {
     onCreateGenre {
       id
       name
+      genrePic
       createdAt
       updatedAt
     }
@@ -211,6 +434,7 @@ export const onUpdateGenre = /* GraphQL */ `
     onUpdateGenre {
       id
       name
+      genrePic
       createdAt
       updatedAt
     }
@@ -221,6 +445,7 @@ export const onDeleteGenre = /* GraphQL */ `
     onDeleteGenre {
       id
       name
+      genrePic
       createdAt
       updatedAt
     }

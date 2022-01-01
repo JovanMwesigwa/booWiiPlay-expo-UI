@@ -25,49 +25,6 @@ const songValidationSchema = yup.object().shape({
 });
 
 
-    const selectImage = async(setPicture) => {
-        try{
-            let result = await ImagePicker.launchImageLibraryAsync({
-                mediaTypes: ImagePicker.MediaTypeOptions.All,
-                allowsEditing: true,
-                aspect: [4, 3],
-                quality: 1,
-              });
-              
-            //   console.log("IMAGE: ",result.path)
-            // setPicture(result)
-
-
-            if(!result.cancelled) {
-                const response = await fetch(result.path);
-                const blob = await response.blob();
-
-                const uploadedImage = await Storage.put(uuidv4() + "__song_art.jpg", blob, {
-                    // acl: "public-read",
-                    contentType: "image/jpg", // contentType is optional
-                    progressCallback(progress) {
-                        console.log(`Uploaded: ${progress.loaded}/${progress.total}`);
-                      },
-                  });
-                
-                  if (uploadedImage.key){
-                        // get the signed URL string
-                        const signedURL = await Storage.get(uploadedImage.key);
-                        setPicture(signedURL)
-                        // console.log("AWS IMAGE: ",signedURL)
-                  }
-                
-            }
-            
-        
-        }catch(err){
-            console.log("Error opening image picker: ",err.message)
-        }
-    }
-
-    // const uploadImagetoS3 = async()
-
-
 
 const UploadSongScreen = ({ navigation }) => {
     const [ userID, setUserID ] = React.useState("")
@@ -77,39 +34,6 @@ const UploadSongScreen = ({ navigation }) => {
 
     const [selectedGenreID, setSelectedGenreID] = React.useState("");
     const [picture, setPicture] = React.useState("");
-
-    const fetchAllSongs =  useFetchAllSongs();
-
-    const  fetchUserID = async() => {
-
-        try{
-            const res = await Auth.currentUserInfo()
-
-            const currentUserID = res.attributes.sub
-
-            setUserID(currentUserID)
-
-        }catch(err){
-            const error = "OOPs!, we could not find your creds"
-            console.log(err.message)
-        }
-    }
-
-    
-    React.useEffect(() => {
-        fetchUserID()
-        // getAllFiles()
-
-        (async () => {
-            if (Platform.OS !== 'web') {
-              const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
-              if (status !== 'granted') {
-                alert('Sorry, we need camera roll permissions to make this work!');
-              }
-            }
-          })();
-        
-    },[])
 
     const handleSubmitUpload = async(values) => {
         setLoading(true)
@@ -124,11 +48,11 @@ const UploadSongScreen = ({ navigation }) => {
                 artUri: picture
             }
             // const upload = await API.graphql({ query: mutations.createSong, variables: {input: songUploadData}});
-            const upload = await API.graphql(graphqlOperation(mutations.createSong, {input: songUploadData}));
+            // const upload = await API.graphql(graphqlOperation(mutations.createSong, {input: songUploadData}));
 
             // console.log(upload.data)
-            // console.log(songUploadData)
-            fetchAllSongs()
+            console.log(songUploadData)
+            // fetchAllSongs()
             
             navigation.navigate("Add Media")
 
@@ -181,6 +105,7 @@ const UploadSongScreen = ({ navigation }) => {
                                 icon="musical-note-sharp" 
                                 setUserRegisterInfo={handleChange('description')} 
                                 errors={errors.description}
+                                noIcon
                                 onBlur={handleBlur('description')}
                                 touched={touched.description}
                                 multiline
@@ -195,7 +120,7 @@ const UploadSongScreen = ({ navigation }) => {
                                 <View style={styles.imageStyle}>
                                     {/* <S3Image imgKey={picture} style={{ width: "100%", height: "100%", resizeMode: 'cover' }} /> */}
                                 </View>
-                                <TouchableOpacity style={styles.artContainer} onPress={() => selectImage(setPicture)}>
+                                <TouchableOpacity style={styles.artContainer} onPress={() => {}}>
                                     <Ionicons name="images" style={styles.iconStyles} color={globalStyles.textWhite} size={20} />
                                 </TouchableOpacity>
                             </View>      

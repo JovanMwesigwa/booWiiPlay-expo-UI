@@ -24,7 +24,30 @@ type Song @model @key(name: "byUser", fields: ["userID"])
 
 }
 
+type MediaCategory @model {
+  id: ID!
+  name: String!
+  songs: [Radio] @connection(keyName: "byMediaCategory", fields: ["id"])
+}
+
+type Radio @model @key(name: "byMediaCategory", fields: ["mediaCategoryID"])  {
+  id: ID!
+  name: String!
+  freq: String!
+  country: String!
+  picture: String
+
+  numberOfMusicShows: String
+
+  mediaCategoryID: ID
+  MediaCategory: MediaCategory @connection(fields: ["mediaCategoryID"])
+
+  genresAccepted: [Genre] @connection(fields: ["id"])
+  songsAcquired: [Song] @connection(fields: ["id"])
+}
+
 type Genre @model{
   id: ID!
   name: String!
+  genrePic: String
 }

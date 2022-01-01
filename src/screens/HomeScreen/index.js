@@ -17,26 +17,6 @@ import { fetchSongsFailed, fetchSongsSuccessful, fetchSongsRequest } from '../..
 
 
 const Home = ({navigation}) => {
-    const { loading, songs, error} = useSelector(state => state.allSongs)
-
-    const dispatch = useDispatch()
-
-    React.useEffect(() => {
-        fetchAllSongs()
-    },[]);
-
-    const fetchAllSongs = async() => {
-        dispatch(fetchSongsRequest())
-        try{
-            const allSongs = await API.graphql(graphqlOperation(listSongs));
-           
-            dispatch(fetchSongsSuccessful(allSongs.data.listSongs.items))
-            // console.log("Test ====",allSongs.data)
-        }catch(err) {
-            console.log("Error song fetch: ", err)
-            dispatch(fetchSongsFailed(err.message))
-        }
-    }
 
     return (
         <ScrollView showsVerticalScrollIndicator={false}>
@@ -53,17 +33,7 @@ const Home = ({navigation}) => {
             <View style={styles.body}>
                 <AppText {...styles.forYou}>For You</AppText>
                 <View style={styles.songContainer}>
-                    {/* {
-                        !error && (
-                            loading ? <ActivityIndicator size={14} color="#fff" /> : (
-                                
-                                    songs.map(item => (
-                                        <SongCard key={item.id} item={item}   />
-                                    ))
-                                
-                            )
-                        )
-                    } */}
+
                     <SongCard  item={songs1}   />
                     <SongCard  item={songs1}   />
                     <SongCard  item={songs1}   />

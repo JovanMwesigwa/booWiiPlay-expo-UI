@@ -1,34 +1,70 @@
 /* eslint-disable prettier/prettier */
 import React from 'react'
-import { StyleSheet, TouchableWithoutFeedback, Image, View, ScrollView } from 'react-native'
+import { StyleSheet, TouchableWithoutFeedback, Image, View, FlatList } from 'react-native'
 import { useNavigation } from '@react-navigation/core'
 import globalStyles from '../../globalStyles'
+import { API } from 'aws-amplify';
+import * as queries from '../graphql/queries';
 import AppText from './AppText'
 
 import media from '../../data/media'
 
 
+
 const MediaCard = () => {
     const navigation = useNavigation();
-    
+
+    const [ mediaData, setMediaData ] = React.useState(null);
+    const [ loading, setLoading ] = React.useState(false);
+    const [ error, setErrors ] = React.useState("");
+
+    React.useEffect(() => {
+        fetchMedia();
+    }, [])
+
+    const fetchMedia = async () => {
+        setLoading(true);
+        try {
+            const allMedia = await API.graphql({ query: queries.listRadios });
+
+            setMediaData(allMedia.data.listRadios.items);
+            setLoading(false);
+
+            // console.log("TEST HERE",allMedia);
+
+        }catch(err) {
+            console.log(err)
+            setErrors(err.message);
+            setLoading(false);
+        }
+    }
+
     return (
         <View style={styles.container}>
             <AppText {...styles.storiesHeader}>Top Media</AppText>
             <View style={styles.storiesContainer}>
-                <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-                    {
-                        media.map(item => (
-                            <TouchableWithoutFeedback key={item.id} onPress={() => navigation.navigate("Profile Details")}>
-                                <View  style={styles.avatorContainer}>
-                                    <View style={styles.avator}>
-                                        <Image source={item.image} resizeMode="cover" style={styles.imageStyles} />
-                                    </View>
-                                    <AppText {...styles.avatorName}>{item.name}</AppText>
-                                </View>
-                            </TouchableWithoutFeedback>
-                        ))
-                    }
-                </ScrollView>
+                {
+                    loading ? null : 
+                        <FlatList
+                                data={mediaData}
+                                renderItem={({ item }) => (
+                                    <TouchableWithoutFeedback key={item.id} onPress={() => navigation.navigate("Profile Details")}>
+                                            <View  style={styles.avatorContainer}>
+                                                <View style={styles.avator}>
+                                                    <Image source={{uri: item?.picture}} resizeMode="cover" style={styles.imageStyles} />
+                                                </View>
+                                                <AppText {...styles.avatorName}>{item.name}</AppText>
+                                            </View>
+                                        </TouchableWithoutFeedback>
+                                )
+                                }
+                                keyExtractor={item => item.id}
+                                horizontal={true}
+                                showsHorizontalScrollIndicator={false}
+                        />
+                    
+                }
+                
             </View>
         </View>
     )

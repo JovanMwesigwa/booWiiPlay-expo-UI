@@ -59,7 +59,13 @@ const ProfileScreen = () => {
         try{
             const res = await Auth.currentUserInfo();
 
-            const userProfile = await API.graphql({ query: queries.getUserProfile, variables: {username: res.username}});
+            const filter = {
+                username: {
+                    eq: res.username
+                }
+            }
+
+            const userProfile = await API.graphql({ query: queries.listUsers, variables: {filter: filter}, limit: 1});
 
             // console.log(userProfile)
 

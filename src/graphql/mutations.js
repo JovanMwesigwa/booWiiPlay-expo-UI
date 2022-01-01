@@ -123,6 +123,7 @@ export const createSong = /* GraphQL */ `
         items {
           id
           name
+          genrePic
           createdAt
           updatedAt
         }
@@ -163,6 +164,7 @@ export const updateSong = /* GraphQL */ `
         items {
           id
           name
+          genrePic
           createdAt
           updatedAt
         }
@@ -203,6 +205,7 @@ export const deleteSong = /* GraphQL */ `
         items {
           id
           name
+          genrePic
           createdAt
           updatedAt
         }
@@ -214,6 +217,243 @@ export const deleteSong = /* GraphQL */ `
     }
   }
 `;
+export const createMediaCategory = /* GraphQL */ `
+  mutation CreateMediaCategory(
+    $input: CreateMediaCategoryInput!
+    $condition: ModelMediaCategoryConditionInput
+  ) {
+    createMediaCategory(input: $input, condition: $condition) {
+      id
+      name
+      songs {
+        items {
+          id
+          name
+          freq
+          country
+          picture
+          numberOfMusicShows
+          mediaCategoryID
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const updateMediaCategory = /* GraphQL */ `
+  mutation UpdateMediaCategory(
+    $input: UpdateMediaCategoryInput!
+    $condition: ModelMediaCategoryConditionInput
+  ) {
+    updateMediaCategory(input: $input, condition: $condition) {
+      id
+      name
+      songs {
+        items {
+          id
+          name
+          freq
+          country
+          picture
+          numberOfMusicShows
+          mediaCategoryID
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const deleteMediaCategory = /* GraphQL */ `
+  mutation DeleteMediaCategory(
+    $input: DeleteMediaCategoryInput!
+    $condition: ModelMediaCategoryConditionInput
+  ) {
+    deleteMediaCategory(input: $input, condition: $condition) {
+      id
+      name
+      songs {
+        items {
+          id
+          name
+          freq
+          country
+          picture
+          numberOfMusicShows
+          mediaCategoryID
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const createRadio = /* GraphQL */ `
+  mutation CreateRadio(
+    $input: CreateRadioInput!
+    $condition: ModelRadioConditionInput
+  ) {
+    createRadio(input: $input, condition: $condition) {
+      id
+      name
+      freq
+      country
+      picture
+      numberOfMusicShows
+      mediaCategoryID
+      MediaCategory {
+        id
+        name
+        songs {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+      genresAccepted {
+        items {
+          id
+          name
+          genrePic
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      songsAcquired {
+        items {
+          id
+          title
+          description
+          artUri
+          audioUri
+          userID
+          genreID
+          createdAt
+          updatedAt
+          owner
+        }
+        nextToken
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const updateRadio = /* GraphQL */ `
+  mutation UpdateRadio(
+    $input: UpdateRadioInput!
+    $condition: ModelRadioConditionInput
+  ) {
+    updateRadio(input: $input, condition: $condition) {
+      id
+      name
+      freq
+      country
+      picture
+      numberOfMusicShows
+      mediaCategoryID
+      MediaCategory {
+        id
+        name
+        songs {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+      genresAccepted {
+        items {
+          id
+          name
+          genrePic
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      songsAcquired {
+        items {
+          id
+          title
+          description
+          artUri
+          audioUri
+          userID
+          genreID
+          createdAt
+          updatedAt
+          owner
+        }
+        nextToken
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const deleteRadio = /* GraphQL */ `
+  mutation DeleteRadio(
+    $input: DeleteRadioInput!
+    $condition: ModelRadioConditionInput
+  ) {
+    deleteRadio(input: $input, condition: $condition) {
+      id
+      name
+      freq
+      country
+      picture
+      numberOfMusicShows
+      mediaCategoryID
+      MediaCategory {
+        id
+        name
+        songs {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+      genresAccepted {
+        items {
+          id
+          name
+          genrePic
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      songsAcquired {
+        items {
+          id
+          title
+          description
+          artUri
+          audioUri
+          userID
+          genreID
+          createdAt
+          updatedAt
+          owner
+        }
+        nextToken
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
 export const createGenre = /* GraphQL */ `
   mutation CreateGenre(
     $input: CreateGenreInput!
@@ -222,6 +462,7 @@ export const createGenre = /* GraphQL */ `
     createGenre(input: $input, condition: $condition) {
       id
       name
+      genrePic
       createdAt
       updatedAt
     }
@@ -235,6 +476,7 @@ export const updateGenre = /* GraphQL */ `
     updateGenre(input: $input, condition: $condition) {
       id
       name
+      genrePic
       createdAt
       updatedAt
     }
@@ -248,6 +490,7 @@ export const deleteGenre = /* GraphQL */ `
     deleteGenre(input: $input, condition: $condition) {
       id
       name
+      genrePic
       createdAt
       updatedAt
     }

@@ -7,7 +7,7 @@ import Octicons from 'react-native-vector-icons/Octicons'
 import globalStyles from '../../globalStyles';
 import AppText from './AppText';
 
-const AppTextInput = ({name, icon, multiline, placeholder, errors, secureTextEntry, touched, rounded, filter, value, setUserRegisterInfo }) => {
+const AppTextInput = ({name, icon, multiline, placeholder, noIcon, errors, secureTextEntry, touched, rounded, filter, value, setUserRegisterInfo }) => {
   const [text, setText] = React.useState('');
 
 //   console.log(name, text);
@@ -24,11 +24,16 @@ const AppTextInput = ({name, icon, multiline, placeholder, errors, secureTextEnt
             placeholderTextColor={placeholder && "#ddd"}
             multiline={multiline ? true : false}
             secureTextEntry={secureTextEntry}
+            textAlignVertical={"top"}
             value={value}
             onChangeText={setUserRegisterInfo}
             style={[styles.textInput, { borderWidth: 1, borderColor: errors && touched && "red", height: multiline ? 100 : 50, borderRadius: rounded ? 45 : 4, }]}
           />
-          <Ionicons name={icon} style={styles.iconStyles} color={globalStyles.textWhite} size={20} />
+          {
+            !noIcon &&
+            <Ionicons name={icon} style={styles.iconStyles} color={globalStyles.textWhite} size={20} />
+          }
+          
          {filter && <Octicons name="settings" style={styles.filterStyles} color={globalStyles.textWhite} size={20} />}
       </View>
   );
@@ -37,7 +42,7 @@ const AppTextInput = ({name, icon, multiline, placeholder, errors, secureTextEnt
 const styles = StyleSheet.create({
     iconStyles: {
         position: 'absolute',
-        bottom: 12,
+        bottom: 18,
         left: 8,
     },
     topTextContainer: {
@@ -56,8 +61,10 @@ const styles = StyleSheet.create({
     },
     textInput: {
         alignItems: 'center',
+        position: 'relative',
         // padding: 10,
-        paddingLeft: 35,
+        padding: 10,
+        paddingLeft: 30,
         backgroundColor: globalStyles.purpleLighter,
         color: globalStyles.textWhite,
     }
