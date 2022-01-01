@@ -1,6 +1,6 @@
 projects:
   boowiiplayexpo:
-    schemaPath: src/graphql/schema.json
+    schemaPath: amplify/backend/api/boowiiplayexpo/build/schema.graphql
     includes:
       - src/graphql/**/*.js
     excludes:

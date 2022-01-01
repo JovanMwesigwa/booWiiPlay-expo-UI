@@ -20,14 +20,23 @@ const styles = StyleSheet.create({
 bottomContainer: {
 
 },
+textInput: {
+  backgroundColor: globalStyles.purpleLighter,
+  color: globalStyles.textWhite,
+  height: 150,
+  alignItems: 'flex-start',
+  padding: 12
+},
 picker: {
+
     alignItems: 'center',
     justifyContent: 'center',
     height: 80,
     width: 80,
     borderRadius: 50,
     backgroundColor: globalStyles.purpleLighter,
-    marginBottom: 15
+    marginBottom: 15,
+    overflow: 'hidden',
 },
 top: {
   paddingVertical: 12,      

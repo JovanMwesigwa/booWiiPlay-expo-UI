@@ -32,6 +32,9 @@ const styles = StyleSheet.create({
     forYou: {
         color: "#fff",
     },
+    songContainer: {
+        backgroundColor: globalStyles.purpleDark
+    }
 });
 
 export default styles;

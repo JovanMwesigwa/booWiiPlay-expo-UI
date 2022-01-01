@@ -52,6 +52,23 @@ export const listUsers = /* GraphQL */ `
     }
   }
 `;
+export const getUserProfile = /* GraphQL */ `
+  query ListUsers(
+    $username: String
+  ) {
+    listUsers(filter: {username: {eq: $username}}, limit: 1) {
+      nextToken
+      items {
+        email
+        username
+        picture
+        id
+        createdAt
+        bio
+      }
+    }
+  }
+`;
 export const getSong = /* GraphQL */ `
   query GetSong($id: ID!) {
     getSong(id: $id) {

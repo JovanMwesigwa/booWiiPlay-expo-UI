@@ -31,8 +31,7 @@ const Home = ({navigation}) => {
             const allSongs = await API.graphql(graphqlOperation(listSongs));
            
             dispatch(fetchSongsSuccessful(allSongs.data.listSongs.items))
-
-            // console.log(allSongs)
+            // console.log("Test ====",allSongs.data)
         }catch(err) {
             console.log("Error song fetch: ", err)
             dispatch(fetchSongsFailed(err.message))
@@ -53,18 +52,27 @@ const Home = ({navigation}) => {
 
             <View style={styles.body}>
                 <AppText {...styles.forYou}>For You</AppText>
-                {
-                    !error && (
-                        loading ? <ActivityIndicator size={14} color="#fff" /> : (
-                            
-                                songs.map(item => (
-                                    <SongCard key={item.id} item={item}   />
-                                ))
-                            
+                <View style={styles.songContainer}>
+                    {/* {
+                        !error && (
+                            loading ? <ActivityIndicator size={14} color="#fff" /> : (
+                                
+                                    songs.map(item => (
+                                        <SongCard key={item.id} item={item}   />
+                                    ))
+                                
+                            )
                         )
-                    )
-                }
-                
+                    } */}
+                    <SongCard  item={songs1}   />
+                    <SongCard  item={songs1}   />
+                    <SongCard  item={songs1}   />
+                    <SongCard  item={songs1}   />
+                    <SongCard  item={songs1}   />
+                    <SongCard  item={songs1}   />
+                    <SongCard  item={songs1}   />
+                    <SongCard  item={songs1}   />
+                </View>
             </View>
         </View>
         </ScrollView>

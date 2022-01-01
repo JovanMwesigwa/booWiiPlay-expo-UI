@@ -12,6 +12,8 @@ import { useNavigation } from '@react-navigation/native'
 import styles from './styles.js'
 import globalStyles from '../../../globalStyles/index.js';
 import {apiUrl, imageApiUrl} from '../../../config/apiUrl'
+import * as queries from '../../graphql/queries';
+import * as mutations from '../../graphql/mutations';
 
 const me = require('../../../assets/me.jpg')
 
@@ -22,6 +24,7 @@ import useRemoveToken from '../../hooks/apiHooks/useRemoveToken.js';
 import {Image, ActivityIndicator} from 'react-native';
 import { initiateFetchUserProfile, fetchUserProfileSuccess, fetchUserProfileFailed } from '../../features/users/userProfileSlice.js';
 import {API, graphqlOperation} from 'aws-amplify';
+import * as ImagePicker from 'expo-image-picker';
 import { fetchAUserFailed, fetchAUserRequest, fetchAUserSuccess } from '../../features/users/awsUserSlice.js';
 
 import {getUser} from '../../graphql/queries'
@@ -31,6 +34,8 @@ import useClearAwsUserToken from '../../hooks/apiHooks/useClearAwsUserToken.js';
 const ProfileScreen = () => {
     
     const navigation = useNavigation()
+
+    const [ profile, setProfile ] = useState({})
     
     
     const loading = useSelector(state => state.awsUser.loading)
@@ -45,47 +50,51 @@ const ProfileScreen = () => {
 
     useEffect(() => {
         fetchUserProfile()
-        
+        // signOut()
     },[])
 
-
-    const  fetchUserProfile = async() => {
+    const fetchUserProfile = async() => {
         dispatch(fetchAUserRequest())
 
         try{
-            const res = await Auth.currentUserInfo()
-            const userProfile = await API.graphql(graphqlOperation(getUser, {id: res.attributes.sub}));
-            console.log(userProfile)
-            dispatch(fetchAUserSuccess(userProfile.data.getUser));
+            const res = await Auth.currentUserInfo();
+
+            const userProfile = await API.graphql({ query: queries.getUserProfile, variables: {username: res.username}});
+
+            // console.log(userProfile)
+
+            dispatch(fetchAUserSuccess(userProfile.data.listUsers.items[0]));
+            setProfile(userProfile)
         }catch(err){
-            const error = "Looks like you don't have any songs currently"
             console.log(err.message)
-            dispatch(fetchAUserFailed(error))
+            dispatch(fetchAUserFailed(err.message))
         }
     }
 
     const signOut = async() => {
         try {
-            // await Auth.signOut();
             clearAwsUserToken()
         } catch (error) {
             console.log('error signing out: ', error);
         }
     }
+
+    
+
     return (
         // 
             <View style={styles.container}>
                 <ScrollView showsVerticalScrollIndicator={false}>
                         {loading ? 
                                 <View style={{ marginVertical: 15 }}><ActivityIndicator size={14} color="#fff" /></View> : 
-                            <ImageBackground source={{uri: `${imageApiUrl}/${userPic}`}} style={styles.imageHeader}>
+                            <ImageBackground source={{uri: user?.picture}} style={styles.imageHeader}>
                                 <View style={styles.innerTop} >
                                             
                                     <Pressable onPress={() => signOut()}>
                                         <Entypo name="dots-three-vertical" color="#fff" size={18} style={styles.changeImageIcon} />
                                     </Pressable>
 
-                                    <Pressable onPress={() => navigation.navigate("EditProfile")}>
+                                    <Pressable onPress={() => navigation.navigate("EditProfile", {user, fetchUserProfile})}>
                                         <Feather name="edit-2" size={20} color="#fff" style={styles.changeImageIcon} />
                                     </Pressable>
 
@@ -93,7 +102,7 @@ const ProfileScreen = () => {
                                     <LinearGradient  colors={['rgba(161, 6, 35, 0)', 'rgba(16, 6, 35, 1)', globalStyles.purpleDark]} style={styles.linearGradient}>
                                         <View style={styles.top}>
 
-                                            {loading ? (<AppText numberOfLines={1} {...styles.bioText}>...</AppText>) : (<AppText numberOfLines={1} {...styles.artistName}>Username (Me)</AppText>)}
+                                            {loading ? (<AppText numberOfLines={1} {...styles.bioText}>...</AppText>) : (<AppText numberOfLines={1} {...styles.artistName}>{user?.username} (Me)</AppText>)}
                                                 
                                             <Pressable onPress={() => console.log("Navigate to change user name and bio")} style={styles.editImageIcon}>
                                                 <Feather name="edit-2" size={18} color="#fff"  />
@@ -102,7 +111,7 @@ const ProfileScreen = () => {
                                         </View>
                                         
                                         <View style={styles.bioContainer}>
-                                            {loading ? (<></>) : (<AppText numberOfLines={3} {...styles.bioText}>Test User</AppText>)}
+                                            <AppText numberOfLines={3} {...styles.bioText}>{user?.bio}</AppText>
                                         </View>
                                         
                                     </LinearGradient>
